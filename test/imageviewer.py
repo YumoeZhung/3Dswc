@@ -3,7 +3,7 @@ __author__ = 'Su Lei'
 import pyglet
 
 window = pyglet.window.Window()
-image = pyglet.image.load('test.jpg')
+image = pyglet.resource.image('test.jpg')
 
 
 @window.event

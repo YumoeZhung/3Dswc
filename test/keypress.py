@@ -1,6 +1,7 @@
 __author__ = 'Su Lei'
 
 import pyglet
+from pyglet.window import key
 
 window = pyglet.window.Window()
 
@@ -15,4 +16,5 @@ def on_key_press(symbol, modifiers):
 def on_draw():
     window.clear()
 
+print key.I
 pyglet.app.run()

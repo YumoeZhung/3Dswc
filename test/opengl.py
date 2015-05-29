@@ -27,17 +27,35 @@ window = pyglet.window.Window()
 # return pyglet.event.EVENT_HANDLED
 #
 #
+#
+#
+# vertex_list = pyglet.graphics.vertex_list_indexed(2, [0, 0], ('v2i', (10, 15, 30, 35)),
+#                                                   ('c3B', (0, 0, 255, 0, 255, 0)))
+#
+#
+# @window.event
+# def on_draw():
+#     vertex_list.vertices[:2] = [60, 95]
+#     vertex_list.colors[:3] = [255, 0, 0]
+#     vertex_list.draw(pyglet.gl.GL_POINTS)
 
-
-vertex_list = pyglet.graphics.vertex_list_indexed(2, [0, 0], ('v2i', (10, 15, 30, 35)),
-                                                  ('c3B', (0, 0, 255, 0, 255, 0)))
-
+color_list = [1.0, 0.0, 0.0]
+color_list_gl = (GLfloat * len(color_list))(*color_list)
 
 @window.event
 def on_draw():
-    vertex_list.vertices[:2] = [60, 95]
-    vertex_list.colors[:3] = [255, 0, 0]
-    vertex_list.draw(pyglet.gl.GL_POINTS)
+    glClearColor(0.0, 0.0, 0.0, 0.0)
+    glClear(GL_COLOR_BUFFER_BIT)
+    glColor3f(1.0, 1.0, 1.0)
+    glColor3fv(color_list_gl)
+    glOrtho(0.0, 1.0, 0.0, 1.0, -1.0, 1.0)
+    glBegin(GL_POLYGON)
+    glVertex2i(20, 20)
+    glVertex2i(25, 80)
+    glVertex2i(50, 87)
+    glVertex2i(74, 12)
+    glEnd()
+    glFlush()
 
 
 pyglet.app.run()

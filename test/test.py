@@ -1,11 +1,13 @@
 __author__ = 'Su Lei'
 
-import pyglet
+class A():
+    x = 10
+    y = 20
 
-window1 = pyglet.window.Window()
-context = window1.context
-config = context.config
-platform = pyglet.window.get_platform()
-display = platform.get_default_display()
+a = A()
+b = A()
 
-print display.get_default_screen()
+print a.x, b.x
+
+a.x = 200
+print a.x, b.x

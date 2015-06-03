@@ -23,6 +23,8 @@ def on_draw():
         glVertex3f(200 + x, 200 + y, z)
         z += 1.0
     glEnd()
+    glGetFloatv(GL_POINT_SIZE_RANGE, size)
+    print size
 
 
 pyglet.app.run()

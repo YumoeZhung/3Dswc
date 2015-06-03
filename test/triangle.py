@@ -38,6 +38,10 @@ def on_draw():
     glRotatef(30.0, 0.0, 0.0, 1.0)
     draw_triangle()
 
+
+
+
+
     glDisable(GL_LINE_STIPPLE)
 
 pyglet.app.run()

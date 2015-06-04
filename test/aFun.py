@@ -19,7 +19,7 @@ def on_draw():
         glVertex2f(x, y)
     glEnd()
     glFlush()
-
+        
 
 @window.event
 def on_resize(width, height):

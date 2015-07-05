@@ -42,6 +42,7 @@ def Lighting(obj, ev):
     renWin.Render()
 
 i = 0
+
 interactor1 = vtk.vtkRenderWindowInteractor()
 interactor1.SetRenderWindow(renWin)
 interactor1.RemoveObservers('LeftButtonPressEvent')

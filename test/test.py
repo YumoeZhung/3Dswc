@@ -1,32 +1,50 @@
 import vtk
- 
-# Create a square in the x-y plane.
-points = vtk.vtkPoints()
-points.InsertNextPoint(0.0, 0.0, 0.0)
-points.InsertNextPoint(1.0, 0.0, 0.0)
-points.InsertNextPoint(1.0, 1.0, 0.0)
-points.InsertNextPoint(0.0, 1.0, 0.0)
- 
-# Create the polygon
-polygon = vtk.vtkPolygon()
-polygon.GetPoints().DeepCopy(points)
-polygon.GetPointIds().SetNumberOfIds(4) # The 4 corners of the square
-for i in range(4):
-    polygon.GetPointIds().SetId(i, i)
- 
-# Inputs
-p1 = [0.1, 0, -1.0]
-p2 = [0.1, 0, 1.0]
-tolerance = 0.001
- 
-# Outputs
-t = vtk.mutable(1) # Parametric coordinate of intersection (0 (corresponding to p1) to 1 (corresponding to p2))
-x = [0.0, 0.0, 0.0]
-pcoords = [0.0, 0.0, 0.0]
-subId = vtk.mutable(0)
-print t, subId
-iD = polygon.IntersectWithLine(p1, p2, tolerance, t, x, pcoords, subId);
- 
-print "intersected? ", iD
-print "intersection: ", x, pcoords
-print t, subId
+from vtk import *
+
+#setup points and vertices
+Points = vtk.vtkPoints()
+Triangles = vtk.vtkCellArray()
+
+Points.InsertNextPoint(1.0, 0.0, 0.0)
+Points.InsertNextPoint(0.0, 0.0, 0.0)
+Points.InsertNextPoint(0.0, 1.0, 0.0)
+
+Triangle = vtk.vtkTriangle()
+Triangle.GetPointIds().SetId(0, 0)
+Triangle.GetPointIds().SetId(1, 1)
+Triangle.GetPointIds().SetId(2, 2)
+Triangles.InsertNextCell(Triangle)
+
+#setup colors
+Colors = vtk.vtkUnsignedCharArray()
+Colors.SetNumberOfComponents(3)
+Colors.SetName("Colors")
+Colors.InsertNextTuple3(255, 0, 0)
+Colors.InsertNextTuple3(0, 255, 0)
+Colors.InsertNextTuple3(0, 0, 255)
+
+polydata = vtk.vtkPolyData()
+polydata.SetPoints(Points)
+polydata.SetPolys(Triangles)
+
+polydata.GetPointData().SetScalars(Colors)
+
+
+mapper = vtk.vtkPolyDataMapper()
+mapper.SetInputData(polydata)
+
+#create the actor with the mapper
+actor = vtk.vtkActor()
+actor.SetMapper(mapper)
+
+ren = vtk.vtkRenderer()
+iren = vtk.vtkRenderWindowInteractor()
+renWin = vtk.vtkRenderWindow()
+#add the actor to the display
+ren.AddActor(actor)
+iren.SetRenderWindow(renWin)
+
+# enable user interface interactor
+iren.Initialize()
+renWin.Render()
+iren.Start()

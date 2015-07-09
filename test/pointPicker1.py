@@ -3,6 +3,22 @@ __author__ = 'Su Lei'
 
 import vtk
 
+
+class MouseInteractorStylePP(vtk.vtkInteractorStyleTrackballCamera):
+    def __init__(self, parnet=None):
+        self.AddObserver('LeftButtonPressEvent', self.leftButtonDown)
+
+    def leftButtonDown(self, *arg):
+        pos = self.GetInteractor().GetEventPosition()
+        print pos
+        r = self.GetInteractor().GetRenderWindow().GetRenderers().GetFirstRenderer()
+        self.GetInteractor().GetPicker().Pick(pos[0], pos[1], 0, r)
+        picked = self.GetInteractor().GetPicker().GetPickPosition()
+        print self.GetInteractor().GetPicker().GetPointId()
+        print picked
+        self.OnLeftButtonDown()
+
+
 points = [
     [0, 0.5, 0],
     [0.4, 0, 0]
@@ -37,7 +53,8 @@ iren.SetRenderWindow(renWin)
 
 picker = vtk.vtkPointPicker()
 iren.SetPicker(picker)
-
+style = MouseInteractorStylePP()
+iren.SetInteractorStyle(style)
 
 
 renWin.Render()

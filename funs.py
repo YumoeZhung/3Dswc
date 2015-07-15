@@ -1,7 +1,7 @@
 __author__ = 'Su Lei'
 
 
-class Point():
+class SwcPoint():
     def __init__(self, s):
         self.data = self.s2l(s)
         self.seq = self.data[0]
@@ -14,7 +14,7 @@ class Point():
     def s2l(self, s):
         data = []
         x = ''
-        for j in xrange(1, len(s)):
+        for j in xrange(0, len(s)):
             if s[j] is ' ' or j is len(s) - 1:
                 data.append(x)
                 x = ''
@@ -32,10 +32,27 @@ class Point():
         return d
 
 
-def readSwc(fname):
-    f = open('test.swc', 'r')
-    pointsArray = []
-    for i in f:
-        p = Point(i)
-        pointsArray.append(p)
-    return pointsArray
+class Line():
+    def __init__(self):
+        self.point_num = 0
+        self.point_data = []
+
+class Swc():
+    def __init__(self, filename):
+        self.points = self.readPointsFromSwc(filename)
+
+    def readPointsFromSwc(self, fname):
+        f = open(fname, 'r')
+        pointsArray = []
+        for i in f:
+            p = SwcPoint(i)
+            pointsArray.append(p)
+        return pointsArray
+
+    def readLinesFromSwc(self):
+        point_num = len(self.points)
+        for i in xrange(point_num):
+            this_point = self.points[i]
+
+
+
